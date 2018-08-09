@@ -18,5 +18,5 @@
 	},
 	"slush": {
 		"shortname": "<%= plugin_shortname %>"
-	},
+	}
 }
