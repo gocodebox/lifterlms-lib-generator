@@ -1,0 +1,22 @@
+{
+	"pot": {
+		"domain": "<%= plugin_text_domain %>",
+		"jsSince": "<%= plugin_version %>",
+		"jsClassname": "<%= generateClassname( plugin_shortname, 'l10n' ) %>",
+		"jsFilename": "<%= generateFilename( plugin_shortname, 'l10n', 'php' ) %>"
+	},
+	"publish": {
+		"title": "<%= plugin_name %>",
+		"lifterlms": {
+			"make": {
+				"tags": []
+			},
+			"slug": "product-slug"
+		},
+		"img": "https://lifterlms.com/wp-content/uploads/2018/08/img.jpg",
+		"svn": false
+	},
+	"slush": {
+		"shortname": "<%= plugin_shortname %>"
+	},
+}

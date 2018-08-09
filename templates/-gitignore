@@ -1,0 +1,13 @@
+.idea/
+.idea/*
+
+node_modules/
+node_modules/*
+
+# Ignore distribution zips
+dist/
+dist/*
+
+# temp directory
+tmp/
+tmp/*

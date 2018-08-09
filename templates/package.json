@@ -1,0 +1,21 @@
+{
+  "name": "<%= plugin_slug %>",
+  "version": "<%= plugin_version %>",
+  "description": "<%= plugin_description %>",
+  "author": "<%= plugin_author_name %>",
+  "homepage": "<%= plugin_uri %>",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gocodebox/<%= plugin_slug %>.git"
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gocodebox/<%= plugin_slug %>/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "lifterlms-lib-tasks": "^2.1.3",
+    "require-dir": "^0.3.2"
+  }
+}
