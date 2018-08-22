@@ -66,6 +66,8 @@ function generateClassname( name, shortname ) {
         parts.push( shortname.toUpperCase() );
     }
     if ( name ) {
+        name = name.split( ' ' ).join( '_' );
+        name = name.split( '-' ).join( '_' );
         parts.push( name );
     }
 
@@ -83,6 +85,8 @@ function generateFilename( name, shortname, ext ) {
     }
 
     if ( name ) {
+        name = name.split( ' ' ).join( '-' );
+        name = name.split( '_' ).join( '-' );
         parts.push( name.toLowerCase() );
     }
 
@@ -265,7 +269,7 @@ gulp.task( 'component', function( done ) {
         },
         {
             name: 'name',
-            message: 'Class Name',
+            message: 'Class Name (capitalized)',
             default: '',
         },
         {
