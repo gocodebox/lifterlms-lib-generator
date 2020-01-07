@@ -1,17 +1,26 @@
 <?php
+/**
+ * Enqueue Scripts & Styles
+ *
+ * @package <%= package %>/Classes
+ *
+ * @since <%= plugin_version %>
+ * @version <%= plugin_version %>
+ */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Enqueue Scripts & Styles
- * @since    <%= plugin_version %>
- * @version  <%= plugin_version %>
+ * <%= generateClassname( 'Assets', plugin_shortname ) %> class.
+ *
+ * @since <%= plugin_version %>
  */
-class <%= generateClassname( plugin_shortname, 'Assets' ) %> {
+class <%= generateClassname( 'Assets', plugin_shortname ) %> {
 
 	/**
 	 * Constructor
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
 	 */
 	public function __construct() {
 
@@ -22,9 +31,10 @@ class <%= generateClassname( plugin_shortname, 'Assets' ) %> {
 
 	/**
 	 * Register, enqueue, & localize frontend scripts
-	 * @return   void
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return void
 	 */
 	public function enqueue() {
 
@@ -41,9 +51,10 @@ class <%= generateClassname( plugin_shortname, 'Assets' ) %> {
 
 	/**
 	 * Register, enqueue, & localize admin scripts
-	 * @return   void
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return void
 	 */
 	public function enqueue_admin() {
 
@@ -60,9 +71,10 @@ class <%= generateClassname( plugin_shortname, 'Assets' ) %> {
 
 	/**
 	 * Get started
-	 * @return   void
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return void
 	 */
 	public function init() {
 
@@ -75,4 +87,5 @@ class <%= generateClassname( plugin_shortname, 'Assets' ) %> {
 	}
 
 }
-return new <%= generateClassname( plugin_shortname, 'Assets' ) %>();
+
+return new <%= generateClassname( 'Assets', plugin_shortname ) %>();

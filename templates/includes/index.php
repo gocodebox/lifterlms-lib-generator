@@ -1,2 +1,2 @@
 <?php
-// quiet you
+// quiet you.

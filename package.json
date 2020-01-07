@@ -1,5 +1,5 @@
 {
-  "name": "slush-llms-scaffold",
+  "name": "llms-scaffold",
   "version": "1.0.0",
   "description": "LifterLMS Add-On Scaffolding",
   "main": "slushfile.js",
@@ -8,14 +8,18 @@
   ],
   "author": "Thomas Patrick Levy <thomas@lifterlms.com>",
   "license": "MIT",
+  "bin": {
+    "llms-scaffold": "./bin/llms-scaffold.js"
+  },
   "dependencies": {
-    "gulp": "^3.9.0",
+    "gulp": "^4.0.0",
+    "gulp-composer": "^0.4.5",
     "gulp-conflict": "^0.4.0",
+    "gulp-exec": "^3.0.2",
     "gulp-install": "^0.4.0",
     "gulp-rename": "^1.4.0",
     "gulp-template": "^3.0.0",
     "iniparser": "^1.0.5",
-    "inquirer": "^0.8.5",
-    "slush": ">=1.1.1"
+    "inquirer": "^0.8.5"
   }
 }

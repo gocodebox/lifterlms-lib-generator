@@ -7,12 +7,12 @@ LifterLMS Plugin Add-On Scaffolding
 
 ### Creating a New Plugin
 
-`mkdir plugin-name && cd plugin-name && slush llms-scaffold`
+`mkdir plugin-name && cd plugin-name && llms-scaffold`
 
 Answer the prompts to proceed
 
 ### Create Empty PHP Classes
 
-`cd plugin-name && slush llms-scaffold:component`
+`cd plugin-name && llms-scaffold component`
 
 Answer the propmts to proceed

@@ -1,0 +1,47 @@
+{
+  "name": "lifterlms/<%= plugin_slug %>",
+  "description": "<%= plugin_description %>",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Team LifterLMS",
+      "email": "team@lifterlms.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "require-dev": {
+    "lifterlms/lifterlms-tests": "dev-master",
+    "lifterlms/lifterlms-cs": "dev-master"
+  },
+  "scripts": {
+    "config-cs": [
+      "\"vendor/bin/phpcs\" --config-set installed_paths ../../../vendor/wp-coding-standards/wpcs,../../../vendor/lifterlms/lifterlms-cs,../../../vendor/phpcompatibility/php-compatibility,../../../vendor/phpcompatibility/phpcompatibility-paragonie,../../../vendor/phpcompatibility/phpcompatibility-wp",
+      "\"vendor/bin/phpcs\" --config-set default_standard LifterLMS"
+    ],
+    "check-cs": [
+      "\"vendor/bin/phpcs\" --colors"
+    ],
+    "check-cs-errors": [
+      "\"vendor/bin/phpcs\" --colors --error-severity=1 --warning-severity=6"
+    ],
+    "fix-cs": [
+      "\"vendor/bin/phpcbf\""
+    ],
+    "post-install-cmd": [
+      "composer config-cs"
+    ],
+    "post-update-cmd": [
+      "composer config-cs"
+    ],
+    "tests-install": [
+      "vendor/bin/llms-tests teardown llms_<%= plugin_shortname_lower %>_tests root password 127.0.0.1",
+      "vendor/bin/llms-tests install llms_<%= plugin_shortname_lower %>_tests root password 127.0.0.1",
+      "vendor/bin/llms-tests plugin lifterlms"
+    ],
+    "tests-run": [
+      "vendor/bin/phpunit"
+    ]
+  }
+}

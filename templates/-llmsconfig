@@ -1,4 +1,5 @@
 {
+	"package_name": "<%= package %>",
 	"pot": {
 		"domain": "<%= plugin_text_domain %>",
 		"jsSince": "<%= plugin_version %>",

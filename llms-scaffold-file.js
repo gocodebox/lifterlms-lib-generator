@@ -6,6 +6,7 @@
 'use strict';
 
 var gulp = require('gulp'),
+    exec = require( 'gulp-exec' ),
     install = require('gulp-install'),
     conflict = require('gulp-conflict'),
     template = require('gulp-template'),
@@ -49,13 +50,20 @@ function getConfig() {
 
 };
 
-function getShortname() {
+function getScaffoldConfigOption( key, default_val = '' ) {
     var config = getConfig();
-    if ( config && config.slush && config.slush.shortname ) {
-        return config.slush.shortname;
+    if ( config && config.scaffold ) { // use new stuff
+        return config.scaffold[ key ] ? config.scaffold[ key ] : default_val;
+    } else if ( config && config.slush ) { // fallback to legacy
+        return config.slush[ key ] ? config.slush[ key ] : default_val;
     }
-    return '';
+    return default_val;
 }
+
+function getShortname() {
+    return getScaffoldConfigOption( 'shortname' )
+}
+
 
 function generateClassname( name, shortname ) {
 
@@ -63,7 +71,8 @@ function generateClassname( name, shortname ) {
     shortname = shortname || getShortname();
 
     if ( shortname ) {
-        parts.push( shortname.toUpperCase() );
+        // parts.push( shortname.toUpperCase() );
+        parts.push( shortname );
     }
     if ( name ) {
         name = name.split( ' ' ).join( '_' );
@@ -198,9 +207,14 @@ gulp.task( 'default', function ( done ) {
         answers.plugin_integration_class = answers.plugin_main_function.replace( 'LLMS', 'LLMS_Integration' );
         answers.plugin_constant_prefix = answers.plugin_main_function.toUpperCase() + '_';
 
+        answers.plugin_main_file = working_dir_name + '.php';
+
+        answers.package = answers.plugin_name.replace( / /g, '_' );
+
         answers.plugin_shortname_lower = answers.plugin_shortname.toLowerCase();
         answers.plugin_name_unprefixed_lower = answers.plugin_name_unprefixed.toLowerCase();
         answers.plugin_name_unprefixed_lower_slugged = answers.plugin_name_unprefixed.toLowerCase().replace( / /g, '_' );
+        answers.plugin_main_class_slugged = answers.plugin_main_class.replace( /_/g, '-' ).toLowerCase();
 
         var d = new Date(),
             mon = d.getMonth() + 1,
@@ -232,6 +246,8 @@ gulp.task( 'default', function ( done ) {
                 // replace name_unprefixed in other files
                 else if ( -1 !== file.basename.indexOf( '{name_unprefixed}' ) ) {
                     file.basename = file.basename.replace( '{name_unprefixed}', answers.plugin_name_unprefixed_lower_slugged.replace( /_/g, '-' ) );
+                } else if ( -1 !== file.basename.indexOf( '{plugin_main_class}' ) ) {
+                    file.basename = file.basename.replace( '{plugin_main_class}', answers.plugin_main_class_slugged );
                 }
             } ) )
             .pipe( conflict( './' ) )
@@ -263,6 +279,10 @@ gulp.task( 'component', function( done ) {
                     name: 'Singleton PHP Class',
                     value: 'class-singleton.php',
                 },
+                {
+                    name: 'Unit Test Case PHP Class',
+                    value: 'class-unit-test-case.php',
+                },
             ],
             default: 'class-standard.php',
             type: 'list',
@@ -283,14 +303,54 @@ gulp.task( 'component', function( done ) {
             default: '',
         },
         {
+            name: 'description_class',
+            message: 'Component Class Description',
+            when: function( answers ) {
+                return ( 'class-unit-test-case.php' !== answers.type );
+            },
+            default: function( answers ) {
+                return generateClassname( answers.name, answers.shortname ) + ' class.';
+            },
+        },
+        {
+            name: 'package',
+            message: 'Component Package',
+            default: getScaffoldConfigOption( 'package_main' ),
+        },
+        {
+            name: 'subpackage',
+            message: 'Component Subpackage',
+            default: function( answers ) {
+                if ( 'class-unit-test-case.php' === answers.type ) {
+                    return 'Tests';
+                }
+                return 'Classes';
+            },
+            when: function( answers ) {
+                return ( answers.package );
+            },
+        },
+        {
+            name: 'group',
+            message: 'Test Suite Group',
+            when: function( answers ) {
+                return ( 'class-unit-test-case.php' === answers.type );
+            },
+        },
+        {
             name: 'version',
-            message: 'Component Description',
+            message: 'Component Version',
             default: '[version]',
         },
         {
             name: 'location',
             message: 'Location (relative to add-on root)',
-            default: './includes/',
+            default: function( answers ) {
+                if ( 'class-unit-test-case.php' === answers.type ) {
+                    return './tests/unit-tests/';
+                }
+                return getScaffoldConfigOption( 'includes_dir', './includes/' );
+            },
         },
         {
             type: 'confirm',
@@ -309,12 +369,21 @@ gulp.task( 'component', function( done ) {
         var config = {
             classname: generateClassname( answers.name, answers.shortname ),
             description: answers.description,
+            description_class: answers.description_class ? answers.description_class : answers.description,
+            package: answers.package ? answers.package + '/' + answers.subpackage : '',
             version: answers.version,
+            group: answers.group,
         };
+
+        if ( 'class-unit-test-case.php' === answers.type ) {
+            config.testcase_classname = getScaffoldConfigOption( 'testcase_class_name', generateClassname( 'Unit_Test_Case', answers.shortname ) );
+        }
+
+        var filename = generateFilename( answers.name, answers.shortname, answers.type.split( '.' ).reverse()[0] );
 
         gulp.src( __dirname + '/components/' + answers.type )
             .pipe( template( config ) )
-            .pipe( rename( generateFilename( answers.name, answers.shortname, answers.type.split( '.' ).reverse()[0] ) ) )
+            .pipe( rename( filename ) )
             .pipe( conflict( answers.location ) )
             .pipe( gulp.dest( answers.location ) )
             .on( 'end', function () {
@@ -323,5 +392,6 @@ gulp.task( 'component', function( done ) {
 
     } );
 
-
 } );
+
+module.exports = gulp;

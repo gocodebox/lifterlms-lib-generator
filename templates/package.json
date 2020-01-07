@@ -14,8 +14,8 @@
     "url": "https://github.com/gocodebox/<%= plugin_slug %>/issues"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "lifterlms-lib-tasks": "^2.1.3",
+    "gulp": "^4.0.0",
+    "lifterlms-lib-tasks": "^3.0.9",
     "require-dir": "^0.3.2"
   }
 }

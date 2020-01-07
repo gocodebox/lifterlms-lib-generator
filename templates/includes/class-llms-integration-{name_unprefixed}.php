@@ -1,28 +1,40 @@
 <?php
+/**
+ * <%= plugin_name %> Integration Class
+ *
+ * @package <%= package %>/Classes
+ *
+ * @since <%= plugin_version %>
+ * @version <%= plugin_version %>
+ */
+
 defined( 'ABSPATH' ) || exit;
 
 /**
- * <%= plugin_name %> Integration Class
- * @since    <%= plugin_version %>
- * @version  <%= plugin_version %>
+ * <%= plugin_integration_class %> class.
+ *
+ * * @since <%= plugin_version %>
  */
 class <%= plugin_integration_class %> extends LLMS_Abstract_Integration {
 
 	/**
 	 * Integration ID
-	 * @var  string
+	 *
+	 * @var string
 	 */
 	public $id = '<%= plugin_name_unprefixed_lower_slugged %>';
 
 	/**
 	 * Integration title
-	 * @var  string
+	 *
+	 * @var string
 	 */
 	public $title = '';
 
 	/**
 	 * Integration Description
-	 * @var  string
+	 *
+	 * @var string
 	 */
 	public $description = '';
 
@@ -30,14 +42,15 @@ class <%= plugin_integration_class %> extends LLMS_Abstract_Integration {
 	 * Integration Priority
 	 * Detemines the order of the settings on the Integrations settings table
 	 * Core integrations fire at 5
-	 * @var  integer
+	 *
+	 * @var integer
 	 */
 	protected $priority = 20;
 
 	/**
 	 * Integration Constructor
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
 	 */
 	protected function configure() {
 
@@ -50,9 +63,10 @@ class <%= plugin_integration_class %> extends LLMS_Abstract_Integration {
 
 	/**
 	 * Run actions after the integration is saved
-	 * @return   void
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return void
 	 */
 	public function after_settings_save() {
 
@@ -66,9 +80,10 @@ class <%= plugin_integration_class %> extends LLMS_Abstract_Integration {
 	 * Get additional settings specific to the integration
 	 * extending classes should override this with the settings
 	 * specific to the integration
-	 * @return   array
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return array
 	 */
 	protected function get_integration_settings() {
 
@@ -130,9 +145,10 @@ class <%= plugin_integration_class %> extends LLMS_Abstract_Integration {
 
 	/**
 	 * Determine if integration dependencies are available
-	 * @return   boolean
-	 * @since    <%= plugin_version %>
-	 * @version  <%= plugin_version %>
+	 *
+	 * @since <%= plugin_version %>
+	 *
+	 * @return boolean
 	 */
 	public function is_installed() {
 		return true;
